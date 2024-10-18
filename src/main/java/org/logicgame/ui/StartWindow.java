@@ -12,9 +12,11 @@ public class StartWindow {
     private Stage stage;
 
     public StartWindow(Stage stage) {
+        //handles the main menu
         this.stage = stage;
+        // labels, buttons and their action
         Label gameName = new Label("Logic Gates Game");
-        gameName.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        gameName.getStyleClass().add("gameMainTitle");
         Button newGameButton = new Button("New Game");
         Button loadGameButton = new Button("Load Game");
         Button statisticButton = new Button("Statistics");
@@ -23,12 +25,16 @@ public class StartWindow {
         loadGameButton.setOnAction(e -> loadGame());
         statisticButton.setOnAction(e -> statistic());
         exitButton.setOnAction(e -> exit());
+
         VBox layout = new VBox(20);
         layout.getChildren().addAll(gameName, newGameButton, loadGameButton, statisticButton, exitButton);
         layout.setAlignment(Pos.CENTER);
+
         Scene scene = new Scene(layout, 500, 500);
+        scene.getStylesheets().add(getClass().getResource("/StartMenuStyle.css").toExternalForm());
+
         stage.setScene(scene);
-        stage.setTitle("Logic Game");
+        stage.setTitle("Logic Gates Game");
         stage.show();
     }
 
