@@ -1,0 +1,42 @@
+/* Background for the main game window */
+.root {
+    -fx-background-color: linear-gradient(to bottom, #a1c4fd, #c2e9fb);
+}
+
+/* Styling for buttons */
+.button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+/* Styling for the game title label */
+.label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fdfcfc;
+}
+
+/* Sidebar styling */
+.vbox {
+    -fx-background-color: #f0f0f0;
+    -fx-padding: 10;
+}
+
+/* Toolbar styling */
+.tool-bar {
+    -fx-background-color: #333;
+    -fx-padding: 5;
+}
+
+.tool-bar .button {
+    -fx-background-color: #666;
+    -fx-text-fill: white;
+}
