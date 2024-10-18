@@ -4,7 +4,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 
 public class ProgramOutput extends Circle {
     private boolean curentState = false;
@@ -18,10 +17,11 @@ public class ProgramOutput extends Circle {
         setOnMouseClicked(this::handleClick);
     }
 
-    // Handle click event
     private void handleClick(MouseEvent event) {
         curentState = !curentState;
         if (curentState) {setFill(Color.WHITE); }
         else {setFill(Color.GRAY);}
-        }
+    }
+
 }
+
