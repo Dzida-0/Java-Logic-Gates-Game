@@ -7,11 +7,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        StatisticFileOperation dbManager = new StatisticFileOperation();
-        dbManager.insertData("aaa","easy",45,3,165,false,1,3,2);
-
 
     }
 }
