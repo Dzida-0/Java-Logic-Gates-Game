@@ -1,5 +1,7 @@
 package org.logicgame.logic;
 
+import javafx.scene.layout.Pane;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +12,16 @@ public class Circuit {
     private List<Connector> connectors;
     private int curentId;
 
-    public Circuit(int numbInputs, int numbOutputs) {
+    public Circuit(int numbInputs, int numbOutputs, Pane gameArea) {
         curentId = 0;
         inputs = new ArrayList<>();
         for (int i = 0; i < numbInputs; i++){
-            inputs.add(new ProgramInput(curentId,this));
+            inputs.add(new ProgramInput(curentId,this,gameArea));
+            curentId+=1;
+        }
+        outputs = new ArrayList<>();
+        for (int i = 0; i < numbOutputs; i++){
+            outputs.add(new ProgramOutput(curentId,this,gameArea));
             curentId+=1;
         }
     }
@@ -25,5 +32,7 @@ public class Circuit {
             }
         }
     }
+    public List<ProgramInput> getInputs() {return inputs;}
+    public List<ProgramOutput> getOutputs() {return outputs;}
 
 }

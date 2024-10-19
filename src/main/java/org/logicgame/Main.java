@@ -1,5 +1,6 @@
 package org.logicgame;
 import org.logicgame.logic.Circuit;
+import org.logicgame.logic.GameEngine;
 import org.logicgame.ui.MainGameWindow;
 
 import javafx.application.Application;
@@ -12,8 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-      
-     new MainGameWindow(primaryStage,"name");
+     new MainGameWindow(primaryStage,new GameEngine("aaa","easy"));
 
     }
   
