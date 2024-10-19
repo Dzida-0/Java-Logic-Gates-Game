@@ -2,13 +2,16 @@ package org.logicgame;
 
 import org.logicgame.fileoperation.*;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.logicgame.ui.StartWindow;
 
-import javax.swing.*;
-import java.util.List;
+public class Main extends Application {
+
+    @Override
+    public void start(Stage mainStage) {
+        new StartWindow(mainStage);
+    }
+
 
 public class Main {
     public static void main(String[] args) {
