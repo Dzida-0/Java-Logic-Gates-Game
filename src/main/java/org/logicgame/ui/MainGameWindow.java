@@ -1,5 +1,6 @@
 package org.logicgame.ui;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 import javafx.stage.Screen;
 import org.logicgame.logic.*;
 
@@ -17,54 +18,76 @@ import java.util.List;
 
 public class MainGameWindow {
     private Stage stage;
-    private String gameName;
-    private int inputNumber;
-    private int outputNumber;
-    private List<ProgramInput> inputsList;
-    private List<ProgramOutput> outputsList;
     private Clock gameClock;
-    public MainGameWindow(Stage stage, String gameName){
+    private GameEngine gameEngine;
+    private Line tempLine = null;
+    public MainGameWindow(Stage stage, GameEngine gameEngine){
         this.stage = stage;
-        this.gameName = gameName;
-
-        inputNumber = 3;
-        outputNumber = 15;
-
-        ToolBar toolBar = new ToolBar();
-        Label timerLabel = new Label("00:00");
-        timerLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-        gameClock = new Clock(timerLabel);
-        gameClock.start();
-
-        Button notButton = new Button("NOT");
-        Button andButton = new Button("AND");
-        Button orButton = new Button("OR");
-        toolBar.getItems().addAll(timerLabel,notButton, andButton, orButton);
-
-
-        int outputSpace = (int) (Screen.getPrimary().getVisualBounds().getHeight())/(outputNumber+1);
-        VBox leftSidebar = new VBox(outputSpace);
-        leftSidebar.setAlignment(Pos.CENTER);
-        leftSidebar.setPrefWidth(100);
-        outputsList  = new ArrayList<>();
-        for (int i = 0 ; i < outputNumber; i++)
-        {
-            ProgramOutput programOutput = new ProgramOutput(i);
-            outputsList.add(programOutput);
-            leftSidebar.getChildren().add(programOutput);
-        }
-
-        VBox rightSidebar = new VBox();
-        rightSidebar.setPrefWidth(100);
-
+        this.gameEngine = gameEngine;
+        //
         BorderPane layout = new BorderPane();
-        VBox centerContent = new VBox();
-        centerContent.setAlignment(Pos.CENTER);
+        Pane centerContent = new Pane();
+        ToolBar toolBar = new ToolBar();
+        Pane leftSidebar = new Pane();
+        Pane rightSidebar = new Pane();
         layout.getChildren().addAll();
         layout.setTop(toolBar);
         layout.setLeft(leftSidebar);
         layout.setRight(rightSidebar);
         layout.setCenter(centerContent);
+        gameEngine.createCircuit(centerContent);
+        ///
+
+        Label timerLabel = new Label("00:00");
+        timerLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+        gameClock = new Clock(timerLabel);
+        gameClock.start();
+        gameEngine.addTimer(gameClock);
+        Button notButton = new Button("NOT");
+        notButton.setOnAction(event -> gameEngine.addNOT(notButton.getLayoutX()));
+        Button andButton = new Button("AND");
+        andButton.setOnAction(event -> gameEngine.addAND(andButton.getLayoutX()));
+        Button orButton = new Button("OR");
+        orButton.setOnAction(event -> gameEngine.addOR(orButton.getLayoutX()));
+        Button xorButton = new Button("XOR");
+        xorButton.setOnAction(event -> gameEngine.addXOR(xorButton.getLayoutX()));
+        Button nandButton = new Button("NAND");
+        nandButton.setOnAction(event -> gameEngine.addNAND(nandButton.getLayoutX()));
+        Button norButton = new Button("NOR");
+        norButton.setOnAction(event -> gameEngine.addNOR(norButton.getLayoutX()));
+        Button xnorButton = new Button("XNOR");
+        xnorButton.setOnAction(event -> gameEngine.addXNOR(xnorButton.getLayoutX()));
+        Button testButton = new Button("Test");
+        testButton.setOnAction(event -> gameEngine.testCircuit());
+        toolBar.getItems().addAll(timerLabel,notButton, andButton, orButton,nandButton,norButton,xorButton,xnorButton,testButton);
+        //
+
+        int inputSpace = (int) (Screen.getPrimary().getVisualBounds().getHeight())/(gameEngine.getInputNumb()+1);
+        leftSidebar.getStyleClass().add("SideBar");
+        leftSidebar.setPrefWidth(50);
+        //
+        int outputSpace = (int) (Screen.getPrimary().getVisualBounds().getHeight())/(gameEngine.getOutputNumb()+1);
+        rightSidebar.getStyleClass().add("SideBar");
+        rightSidebar.setPrefWidth(50);
+        //
+        int inputPos = inputSpace;
+        for (ProgramInput imp: gameEngine.getInputs()) {
+
+            imp.setLayoutX(25);
+            imp.setLayoutY(inputPos);
+            leftSidebar.getChildren().add(imp);
+            centerContent.getChildren().add(imp.gateConnectorSetup());
+            inputPos += inputSpace;
+        }
+        int oupputPos = outputSpace;
+        for (ProgramOutput out: gameEngine.getOutputs()) {
+            out.setLayoutX(25);
+            out.setLayoutY(oupputPos);
+            rightSidebar.getChildren().add(out);
+            centerContent.getChildren().add(out.gateConnectorSetup());
+            oupputPos += outputSpace;
+        }
+        gameEngine.outputsUpdate();
 
         Scene scene = new Scene(layout);
         stage.setScene(scene);

@@ -45,4 +45,5 @@ public class Clock {
         int seconds = totalSeconds % 60;
         return String.format("%02d:%02d", minutes, seconds);
     }
+    public int getResult(){return secondsElapsed;}
 }
