@@ -11,10 +11,9 @@ public class Main extends Application {
     public void start(Stage mainStage) {
         new StartWindow(mainStage);
     }
-
-
-public class Main {
     public static void main(String[] args) {
 
+        launch(args);
     }
+
 }

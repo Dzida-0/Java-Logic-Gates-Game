@@ -38,7 +38,7 @@ public class StatisticFileOperation {
     public void saveNewGameData(String name, String level, int time, int gates, int score, boolean challenge,
                            int mistakes, int inputNumb, int outputNumb) {
         String data = String.format(
-                "INSERT INTO statistic (name, level, time, gates, score, challenge, mistakes, inputNumb, outputN    umb) " +
+                "INSERT INTO statistic (name, level, time, gates, score, challenge, mistakes, inputNumb, outputNumb) " +
                         "VALUES ('%s', '%s', %d, %d, %d, %b, %d, %d, %d);",
                 name, level, time, gates, score, challenge, mistakes, inputNumb, outputNumb);
         try (Connection conn = DriverManager.getConnection(databaseLink)){
@@ -77,7 +77,7 @@ public class StatisticFileOperation {
     public boolean isNameInDatabase(String name) {
         boolean isIn = false;
         try (Connection conn = DriverManager.getConnection(databaseLink);
-             java.sql.PreparedStatement nameIn = conn.prepareStatement("SELECT name FROM game_data WHERE name = ?;")) {
+             java.sql.PreparedStatement nameIn = conn.prepareStatement("SELECT name FROM statistic WHERE name = ?;")) {
             nameIn.setString(1, name);
             try (ResultSet rs = nameIn.executeQuery()) {
                 isIn = rs.next();
