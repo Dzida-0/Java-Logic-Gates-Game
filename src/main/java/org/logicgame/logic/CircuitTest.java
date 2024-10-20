@@ -28,7 +28,6 @@ public class CircuitTest {
                     }
                     break;
             }
-
         }
     }
     public boolean solutionTest(){
@@ -37,7 +36,6 @@ public class CircuitTest {
         for (ProgramInput pIn: inputs) {
             current.add(pIn.getCurrentState());
         }
-        System.out.println(solution);
         for (List<List<Boolean>> sol: solution) {
             List<Boolean> current_out = new ArrayList<>();
             for (int i = 0; i < inputs.size();i++){
@@ -47,9 +45,6 @@ public class CircuitTest {
                 current_out.add(pOut.getState());
             }
             if(!current_out.equals(sol.get(1))){
-                System.out.println(current_out);
-                System.out.println(sol.get(1));
-                System.out.println();
                 pass = false;
                 break;
             }

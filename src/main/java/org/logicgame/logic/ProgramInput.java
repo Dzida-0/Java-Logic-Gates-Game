@@ -34,7 +34,12 @@ public class ProgramInput extends Circle{
         out.setLayoutX(5);
         return out;
     }
-    public void setState(boolean state){currentState = state;}
+    public void setState(boolean state){
+        currentState = state;
+        out.gateConnectorUpdate(currentState);
+        circuitTest.outputsUpdate();
+
+    }
 
 }
 

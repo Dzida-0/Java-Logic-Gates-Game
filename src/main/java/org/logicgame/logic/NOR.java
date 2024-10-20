@@ -8,7 +8,7 @@ public class NOR extends Gate{
     private boolean in2 = false;
     public NOR(double posX, Pane gameArea){
         super(posX,2, gameArea);
-        setFill(Color.LAVENDER);
+        setFill(Color.BROWN);
         this.setIn1(new GateConnector(this,1,gameArea),false);
         this.setIn2(new GateConnector(this,2,gameArea));
         updateGate(1,false);

@@ -13,7 +13,7 @@ public class Main extends Application {
     @Override
 
     public void start(Stage primaryStage) {
-     new MainGameWindow(primaryStage,new GameEngine("aaa","easy"));
+     new StartWindow(primaryStage);
 
     }
 

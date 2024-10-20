@@ -6,11 +6,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.logicgame.logic.GameEngine;
 
 public class NewGameWindow {
 
     private Stage stage;
-    private String difficulty = "Easy";
+    private String difficulty = "easy";
+    private String name;
+    private boolean challenge;
     private Button startGameButton;
     private Label errorMessage;
 
@@ -28,6 +31,7 @@ public class NewGameWindow {
                 gameNameField.setText(oldValue);
             }
         });
+        gameNameField.setOnAction(event -> name = gameNameField.getText());
         ComboBox<String> difficultyBox = new ComboBox<>();
         difficultyBox.getItems().addAll("Easy", "Medium", "Hard");
         difficultyBox.setValue("Easy");
@@ -41,6 +45,7 @@ public class NewGameWindow {
         challengeModeBox.setOnAction(event -> {
             challengeMessage.setVisible(challengeModeBox.isSelected());
         });
+        challengeModeBox.setOnAction(event -> challenge = challengeModeBox.isSelected());
         gameNameField.textProperty().addListener((observable, oldValue, newValue) -> {checkGameName(newValue);});
         backButton.setOnAction(event -> goBackToMenu());
         VBox layout = new VBox(10);
@@ -55,7 +60,7 @@ public class NewGameWindow {
         new StartWindow(stage);
     }
     private void startNewGame(){
-
+        new MainGameWindow(stage,new GameEngine(name,difficulty),challenge);
     }
 
     private void checkGameName(String gameName) {

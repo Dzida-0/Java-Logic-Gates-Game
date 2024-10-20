@@ -18,6 +18,7 @@ public class GameEngine {
     private Circuit circuit;
     private int mistakes;
     private Clock timer;
+    private Stage stage;
     public GameEngine(String name,String level){
         this.name = name;
         this.level = level;
@@ -72,10 +73,11 @@ public class GameEngine {
         if (test){
             timer.stop();
             timer.getResult();
-            new YouWonWindow( new Stage(),timer.getResult(),timer.getResult());
+            new YouWonWindow(stage,timer.getResult(),timer.getResult());
         }
         else { timer.addPenalty();}
     }
     public void outputsUpdate(){circuit.outputsUpdate();}
+    public void addStage(Stage s){stage = s;}
 
 }

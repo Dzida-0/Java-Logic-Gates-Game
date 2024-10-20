@@ -27,10 +27,10 @@ public class YouWonWindow {
         scoreLabel.setStyle("-fx-font-size: 18px;");
 
         Button saveButton = new Button("Save Game");
-        saveButton.setOnAction(e -> saveGame());
+        saveButton.setOnAction(event -> saveGame());
 
         Button exitButton = new Button("Exit");
-        exitButton.setOnAction(e -> stage.close());
+        exitButton.setOnAction(event -> new StartWindow(stage));
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
         layout.getChildren().addAll(youWonLabel, timeLabel, scoreLabel, saveButton, exitButton);
