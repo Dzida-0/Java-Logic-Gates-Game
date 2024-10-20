@@ -1,29 +1,25 @@
 package org.logicgame;
+import org.logicgame.logic.Circuit;
+import org.logicgame.logic.GameEngine;
+import org.logicgame.ui.MainGameWindow;
 
+import org.logicgame.fileoperation.*;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.logicgame.ui.StartWindow;
 
 public class Main extends Application {
-
+  
     @Override
+
     public void start(Stage primaryStage) {
-        Button btn = new Button("Click me!");
-        btn.setOnAction(event -> System.out.println("Button clicked!"));
+     new StartWindow(primaryStage);
 
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-
-        Scene scene = new Scene(root, 400, 300);
-
-        primaryStage.setTitle("Logic Gates Game");
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     public static void main(String[] args) {
+
         launch(args);
     }
+
 }
