@@ -1,22 +1,32 @@
 package org.logicgame.logic;
 
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 public class Connector extends Line {
     private int id;
-    private GateConnector gateConnector;
+    private GateConnector gateConnectorOut;
+    private GateConnector GateConnectorIn;
     private boolean on;
-    public Connector(GateConnector gateConnector) {
+    public Connector(GateConnector getGateConnectorIn,GateConnector gateConnectorOut,boolean state) {
         setStrokeWidth(4);
         setStroke(Color.BLACK);
-        this.gateConnector = gateConnector;
+        this.gateConnectorOut = gateConnectorOut;
+        this.GateConnectorIn = getGateConnectorIn;
+        setOnMousePressed(event -> {
+            if (event.isSecondaryButtonDown()) {
+                deleteConnector();
+            }
+        });
+        connectorStateChange(state);
     }
     public void connectorStateChange(boolean state){
+
         this.on = state;
         if(state){setStroke(Color.WHITE);}
         else {setStroke(Color.BLACK);}
-        gateConnector.gateConnectorUpdate(state);
+        gateConnectorOut.gateConnectorUpdate(state);
 
     }
 
@@ -27,6 +37,12 @@ public class Connector extends Line {
     public void moveOutput(double x, double y){
         setEndX(x);
         setEndY(y);
+    }
+    protected void deleteConnector(){
+        gateConnectorOut.gateConnectorUpdate(false);
+        gateConnectorOut.removeInput();
+        GateConnectorIn.removeOutput(this);
+
     }
 
 

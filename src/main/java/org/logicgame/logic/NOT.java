@@ -8,7 +8,8 @@ public class NOT extends Gate{
     public NOT(double posX,Pane gameArea){
         super(posX,1, gameArea);
         setFill(Color.GREEN);
-        this.setIn1(new GateConnector(this,1,gameArea));
+        this.setIn1(new GateConnector(this,1,gameArea),true);
+        updateGate(1,false);
     }
     @Override
     public void updateGate(int inNr, boolean state){

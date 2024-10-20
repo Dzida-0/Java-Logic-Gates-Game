@@ -42,13 +42,24 @@ public class MainGameWindow {
         timerLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
         gameClock = new Clock(timerLabel);
         gameClock.start();
+        gameEngine.addTimer(gameClock);
         Button notButton = new Button("NOT");
         notButton.setOnAction(event -> gameEngine.addNOT(notButton.getLayoutX()));
         Button andButton = new Button("AND");
         andButton.setOnAction(event -> gameEngine.addAND(andButton.getLayoutX()));
         Button orButton = new Button("OR");
         orButton.setOnAction(event -> gameEngine.addOR(orButton.getLayoutX()));
-        toolBar.getItems().addAll(timerLabel,notButton, andButton, orButton);
+        Button xorButton = new Button("XOR");
+        xorButton.setOnAction(event -> gameEngine.addXOR(xorButton.getLayoutX()));
+        Button nandButton = new Button("NAND");
+        nandButton.setOnAction(event -> gameEngine.addNAND(nandButton.getLayoutX()));
+        Button norButton = new Button("NOR");
+        norButton.setOnAction(event -> gameEngine.addNOR(norButton.getLayoutX()));
+        Button xnorButton = new Button("XNOR");
+        xnorButton.setOnAction(event -> gameEngine.addXNOR(xnorButton.getLayoutX()));
+        Button testButton = new Button("Test");
+        testButton.setOnAction(event -> gameEngine.testCircuit());
+        toolBar.getItems().addAll(timerLabel,notButton, andButton, orButton,nandButton,norButton,xorButton,xnorButton,testButton);
         //
 
         int inputSpace = (int) (Screen.getPrimary().getVisualBounds().getHeight())/(gameEngine.getInputNumb()+1);
@@ -59,25 +70,24 @@ public class MainGameWindow {
         rightSidebar.getStyleClass().add("SideBar");
         rightSidebar.setPrefWidth(50);
         //
-
-
+        int inputPos = inputSpace;
         for (ProgramInput imp: gameEngine.getInputs()) {
+
             imp.setLayoutX(25);
-            imp.setLayoutY(inputSpace);
+            imp.setLayoutY(inputPos);
             leftSidebar.getChildren().add(imp);
             centerContent.getChildren().add(imp.gateConnectorSetup());
-            inputSpace += inputSpace;
+            inputPos += inputSpace;
         }
+        int oupputPos = outputSpace;
         for (ProgramOutput out: gameEngine.getOutputs()) {
             out.setLayoutX(25);
-            out.setLayoutY(outputSpace);
+            out.setLayoutY(oupputPos);
             rightSidebar.getChildren().add(out);
             centerContent.getChildren().add(out.gateConnectorSetup());
-            outputSpace += outputSpace;
+            oupputPos += outputSpace;
         }
-
-
-
+        gameEngine.outputsUpdate();
 
         Scene scene = new Scene(layout);
         stage.setScene(scene);

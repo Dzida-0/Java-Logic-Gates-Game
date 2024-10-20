@@ -9,7 +9,7 @@ public class AND extends Gate{
     public AND(double posX, Pane gameArea){
         super(posX,2,gameArea);
         setFill(Color.RED);
-        this.setIn1(new GateConnector(this,1,gameArea));
+        this.setIn1(new GateConnector(this,1,gameArea),false);
         this.setIn2(new GateConnector(this,2,gameArea));
     }
     @Override

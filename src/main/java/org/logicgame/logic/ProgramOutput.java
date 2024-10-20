@@ -14,8 +14,12 @@ public class ProgramOutput extends Circle {
     public ProgramOutput(int id, Circuit circuit, Pane gameArea) {
         this.id = id;
         Gate not=  new NOT(1000,gameArea);
+        not.out.setVisible(false);
+        not.out.setDisable(true);
         not.setVisible(false);
         not.setDisable(false);
+        not.in1.setVisible(false);
+        not.in1.setDisable(true);
         this.in = new GateConnector(not,1,new Pane());
 
         setRadius(20);
@@ -30,23 +34,23 @@ public class ProgramOutput extends Circle {
         return in;
     }
     public boolean checkUpdate(boolean stateExpected){
-        boolean trueState = in.getState();
-        if (stateExpected && trueState){
+         curentState = in.getState();
+        if (stateExpected && curentState){
             setFill(Color.GREEN);
         }
-        else if (!stateExpected && trueState ) {
+        else if (!stateExpected && curentState ) {
             setFill(Color.RED);
         }
-        else if (stateExpected && !trueState) {
+        else if (stateExpected && !curentState) {
             setFill(Color.ORANGE);
         }
         else
         {
             setFill(Color.GREY);
         }
-        return trueState == stateExpected;
+        return curentState == stateExpected;
     }
-
+    public boolean getState(){return curentState;}
 
 
 }

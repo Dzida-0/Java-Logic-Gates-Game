@@ -28,7 +28,11 @@ public class GateConnector extends Circle {
         setFill(Color.GRAY);
         setStroke(Color.BLACK);
         setStrokeWidth(3);
-        setOnMousePressed(this::handleClick);
+        setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown()) {
+                handleClick(event);
+            }
+        });
         setOnMouseDragged(this::handleMouseMoved);
         setOnMouseReleased(this::handleMouseDragExit);
     }
@@ -70,30 +74,33 @@ public class GateConnector extends Circle {
             ((Pane) this.getParent()).getChildren().add(tempLine);
         }
     }
-    private void handleMouseMoved(MouseEvent e) {
+    private void handleMouseMoved(MouseEvent event) {
         if (tempLine != null) {
-            tempLine.setEndX(e.getX()+tempLine.getStartX());
-            tempLine.setEndY(e.getY()+tempLine.getStartY());
+            tempLine.setEndX(event.getX()+tempLine.getStartX());
+            tempLine.setEndY(event.getY()+tempLine.getStartY());
         }
     }
 
-    private void handleMouseDragExit(MouseEvent e){
+    private void handleMouseDragExit(MouseEvent event){
         gameArea.getChildren().remove(tempLine);
         for (Node node : gameArea.getChildren()) {
             if (node instanceof GateConnector) {
-                if (node.getBoundsInParent().contains(e.getX()+tempLine.getStartX(), e.getY()+tempLine.getStartY())) {
-                    GateConnector gateConnector = (GateConnector) node;
-                    if (gateConnector.isInput()){
-
-                        Connector c = new Connector(gateConnector);
-                        c.setStartY(this.getLayoutY());
-                        c.setStartX(this.getLayoutX());
-                        c.setEndX(e.getX()+tempLine.getStartX());
-                        c.setEndY(e.getY()+tempLine.getStartY());
-                        gateConnector.setInput(c);
-                        outputs.add(c);
-                        ((Pane) this.getParent()).getChildren().add(c);
-                        break;
+                if (event != null) {
+                    if (node.getBoundsInParent().contains(event.getX() + tempLine.getStartX(), event.getY() + tempLine.getStartY())) {
+                        GateConnector gateConnector = (GateConnector) node;
+                        if (gateConnector.isInput()) {
+                            if (gateConnector.input == null) {
+                                Connector c = new Connector(this, gateConnector, state);
+                                c.setStartY(this.getLayoutY());
+                                c.setStartX(this.getLayoutX());
+                                c.setEndX(event.getX() + tempLine.getStartX());
+                                c.setEndY(event.getY() + tempLine.getStartY());
+                                gateConnector.setInput(c);
+                                outputs.add(c);
+                                ((Pane) this.getParent()).getChildren().add(c);
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -102,7 +109,6 @@ public class GateConnector extends Circle {
 
     }
 
-    public List<Connector> getOutputs(){return outputs;}
     public void move(double posX,double posY){
         setLayoutY(posY);
         setLayoutX(posX);
@@ -120,5 +126,23 @@ public class GateConnector extends Circle {
     public void setInput(Connector c){input = c;}
 
     public boolean getState() {return state;}
+
+    public void removeInput() {input = null;}
+    public void removeOutput(Connector c) {
+
+        ((Pane) this.getParent()).getChildren().remove(c);
+       outputs.remove(c);
+    }
+    public void removeGate(){
+        if (outputs != null) {
+            for (int i = 0; i <outputs.size();i++) {
+                outputs.get(0).deleteConnector();
+            }
+        }
+        else if (input != null) {
+            input.deleteConnector();
+        }
+    }
+
 
 }
